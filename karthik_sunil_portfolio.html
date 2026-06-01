@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karthik Sunil — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#060A14;font-family:'Inter',-apple-system,sans-serif;color:#F1F5F9;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:#060A14}
+::-webkit-scrollbar-thumb{background:#3B82F6;border-radius:2px}
+
+:root{
+  --bg:#060A14;--bg2:#090E1C;
+  --card:rgba(255,255,255,0.022);
+  --brd:rgba(255,255,255,0.07);
+  --blue:#3B82F6;--blueA:rgba(59,130,246,0.08);
+  --gold:#D97706;--goldA:rgba(217,119,6,0.08);
+  --text:#F1F5F9;--mid:#94A3B8;--dim:#475569;
+}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.7)}}
+.fu{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}
+.fu.v{opacity:1;transform:translateY(0)}
+
+.wrap{max-width:1200px;margin:0 auto;padding:0 64px}
+section{padding:112px 0;position:relative;z-index:1}
+section.alt{background:var(--bg2)}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:block}
+.sec-h{font-size:clamp(34px,5vw,50px);font-weight:700;line-height:1.08;color:var(--text);margin-bottom:56px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:999;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 64px;transition:all .3s ease}
+nav.sc{background:rgba(6,10,20,.92);backdrop-filter:blur(24px);border-bottom:1px solid var(--brd)}
+.nav-lg{font-size:13px;font-weight:800;letter-spacing:5px;text-transform:uppercase;color:var(--blue)}
+.nav-ul{display:flex;gap:40px;list-style:none}
+.nav-ul a{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--dim);transition:color .2s}
+.nav-ul a:hover{color:var(--text)}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;padding-top:64px}
+.hero-in{max-width:1200px;margin:0 auto;padding:0 64px;position:relative;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(59,130,246,.28);background:rgba(59,130,246,.05);padding:8px 20px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue);margin-bottom:40px;animation:fadeUp .8s ease .2s both}
+.bdot{width:6px;height:6px;background:var(--blue);border-radius:50%;animation:blink 2s ease-in-out infinite}
+.hero-name{font-size:clamp(68px,11vw,144px);font-weight:800;line-height:.9;letter-spacing:-4px;color:var(--text);margin-bottom:30px;animation:fadeUp .8s ease .4s both}
+.hero-name span{display:block;color:transparent;-webkit-text-stroke:1.5px rgba(241,245,249,.15)}
+.hero-sub{font-size:17px;font-weight:400;color:var(--mid);max-width:520px;line-height:1.8;margin-bottom:38px;animation:fadeUp .8s ease .6s both}
+.hero-pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:48px;animation:fadeUp .8s ease .8s both}
+.hpill{font-size:12px;font-weight:500;color:var(--mid);border:1px solid var(--brd);padding:7px 16px;border-radius:6px;background:var(--card);transition:all .2s}
+.hpill:hover{border-color:rgba(59,130,246,.25);color:var(--text)}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;animation:fadeUp .8s ease 1s both}
+.btn-p{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;font-size:12px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;padding:13px 28px;border-radius:8px;transition:all .25s}
+.btn-p:hover{background:#2563EB;transform:translateY(-2px);box-shadow:0 12px 36px rgba(59,130,246,.32)}
+.btn-s{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--brd);color:var(--mid);font-size:12px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;padding:13px 28px;border-radius:8px;transition:all .25s}
+.btn-s:hover{border-color:rgba(59,130,246,.3);color:var(--text)}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--brd);border:1px solid var(--brd);border-radius:16px;overflow:hidden}
+.sc-cell{background:var(--bg2);padding:46px 38px;cursor:default;transition:background .3s}
+.sc-cell:hover{background:rgba(59,130,246,.025)}
+.sc-num{font-size:58px;font-weight:800;line-height:1;letter-spacing:-3px;margin-bottom:10px}
+.sc-lbl{font-size:15px;font-weight:600;color:var(--text);margin-bottom:7px}
+.sc-desc{font-size:13px;color:var(--dim);line-height:1.6}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.about-body p{font-size:15px;color:var(--mid);line-height:1.85;margin-bottom:16px}
+.stags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.stag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);border:1px solid var(--brd);padding:5px 13px;border-radius:4px;background:var(--card)}
+.info-stack{display:flex;flex-direction:column;gap:1px}
+.icard{padding:22px 26px;border:1px solid var(--brd);background:var(--card);transition:all .2s;cursor:default}
+.icard:first-child{border-radius:12px 12px 0 0}
+.icard:last-child{border-radius:0 0 12px 12px}
+.icard:hover{border-color:rgba(59,130,246,.2);background:rgba(59,130,246,.02)}
+.ic-lbl{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+.ic-val{font-size:26px;font-weight:700;color:var(--text);line-height:1.1;margin-bottom:4px}
+.ic-sub{font-size:13px;color:var(--dim)}
+
+/* EXPERIENCE GROUPS */
+.exp-group{margin-bottom:56px}
+.exp-group:last-child{margin-bottom:0}
+.exp-group-hd{display:flex;align-items:center;gap:14px;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--brd)}
+.egh-ico{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.egh-blue{background:var(--blueA);border:1px solid rgba(59,130,246,.2);color:var(--blue)}
+.egh-gold{background:var(--goldA);border:1px solid rgba(217,119,6,.2);color:var(--gold)}
+.egh-lbl{font-size:18px;font-weight:700;color:var(--blue)}
+.egh-lbl-gold{color:var(--gold)}
+.egh-count{margin-left:auto;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--dim)}
+.exp-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+
+/* EXP CARDS */
+.ec{background:var(--card);border:1px solid var(--brd);border-radius:12px;padding:28px;transition:all .3s;cursor:default}
+.ec:hover{border-color:rgba(59,130,246,.26);transform:translateY(-3px);box-shadow:0 18px 52px rgba(0,0,0,.32)}
+.ec.gd:hover{border-color:rgba(217,119,6,.26)}
+.logo-b{width:48px;height:48px;border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;font-size:13px;font-weight:800;letter-spacing:.5px;overflow:hidden;flex-shrink:0}
+.l-ait{background:var(--blueA);border:1px solid rgba(59,130,246,.2);color:var(--blue);font-size:11px}
+.l-goo{background:#fff}
+.l-goo i{color:#4285F4;font-size:22px}
+.l-rot{background:rgba(247,168,27,.1);border:1px solid rgba(247,168,27,.2);color:#F7A81B;font-size:18px}
+.l-ieee{background:#00629B;color:#fff;font-size:10px;font-weight:900;letter-spacing:.3px}
+.l-vig{background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.2);color:#7C3AED;font-size:18px}
+.l-swc{background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.2);color:#059669;font-size:18px}
+.l-tedx{background:#E62B1E;color:#fff;font-size:11px;font-weight:900;letter-spacing:.5px}
+.l-slf{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:#F59E0B;font-size:18px}
+.l-jg{background:var(--goldA);border:1px solid rgba(217,119,6,.2);color:var(--gold);font-size:18px}
+.l-vips{background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.2);color:#DC2626;font-size:18px}
+.l-cnt{background:var(--blueA);border:1px solid rgba(59,130,246,.15);color:var(--blue);font-size:18px}
+.ec-org{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+.ec.gd .ec-org{color:var(--gold)}
+.ec-role{font-size:18px;font-weight:700;color:var(--text);margin-bottom:14px;line-height:1.2}
+.ec-desc{font-size:13px;color:var(--dim);line-height:1.75;margin-bottom:18px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:4px;background:var(--blueA);border:1px solid rgba(59,130,246,.16);color:var(--blue)}
+.ec.gd .chip{background:var(--goldA);border-color:rgba(217,119,6,.16);color:var(--gold)}
+
+/* VENTURES */
+.vent-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.vc{border:1px solid var(--brd);border-radius:16px;padding:48px;position:relative;overflow:hidden;transition:all .35s}
+.vc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px}
+.adra::before{background:linear-gradient(90deg,var(--gold) 0%,transparent 60%)}
+.resq::before{background:linear-gradient(90deg,var(--blue) 0%,transparent 60%)}
+.vc:hover{transform:translateY(-5px);box-shadow:0 28px 64px rgba(0,0,0,.45)}
+.vc-ico{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;margin-bottom:22px}
+.adra .vc-ico{background:var(--goldA);border:1px solid rgba(217,119,6,.2);color:var(--gold)}
+.resq .vc-ico{background:var(--blueA);border:1px solid rgba(59,130,246,.2);color:var(--blue)}
+.vc-nm{font-size:40px;font-weight:800;letter-spacing:-2px;margin-bottom:4px}
+.adra .vc-nm{color:var(--gold)}
+.resq .vc-nm{color:var(--blue)}
+.vc-tag{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:18px}
+.vc-desc{font-size:14px;color:var(--mid);line-height:1.8;margin-bottom:26px}
+.vc-items{display:flex;flex-direction:column;gap:10px}
+.vc-item{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:rgba(255,255,255,.015);border:1px solid var(--brd);border-radius:8px;transition:border-color .2s}
+.vc-item:hover{border-color:rgba(255,255,255,.1)}
+.vdot{width:5px;height:5px;border-radius:50%;margin-top:7px;flex-shrink:0}
+.adra .vdot{background:var(--gold)}
+.resq .vdot{background:var(--blue)}
+.vit{font-size:13px;font-weight:600;color:var(--text);display:block;margin-bottom:2px}
+.vsub{font-size:12px;color:var(--dim)}
+
+/* ACHIEVEMENTS */
+.ach-groups{display:flex;flex-direction:column;gap:56px}
+.ach-hd{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--brd)}
+.ach-ico{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.ai-b{background:var(--blueA);border:1px solid rgba(59,130,246,.2);color:var(--blue)}
+.ai-g{background:var(--goldA);border:1px solid rgba(217,119,6,.2);color:var(--gold)}
+.ach-lbl{font-size:20px;font-weight:700}
+.ach-lbl.bl{color:var(--blue)}
+.ach-lbl.gd{color:var(--gold)}
+.ach-cnt{margin-left:auto;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--dim)}
+.arows{display:flex;flex-direction:column;gap:1px}
+.ar{display:flex;align-items:center;gap:32px;padding:26px 32px;background:var(--card);border:1px solid var(--brd);cursor:default;transition:all .22s}
+.ar:first-child{border-radius:12px 12px 0 0}
+.ar:last-child{border-radius:0 0 12px 12px}
+.ar:only-child{border-radius:12px}
+.ar:hover{background:rgba(59,130,246,.015);border-color:rgba(59,130,246,.1)}
+.ar.gd:hover{background:rgba(217,119,6,.015);border-color:rgba(217,119,6,.1)}
+.ar-num{font-size:36px;font-weight:800;color:var(--dim);min-width:110px;line-height:1;letter-spacing:-2px}
+.ar-body{flex:1}
+.ar-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px}
+.ar-desc{font-size:13px;color:var(--dim);line-height:1.6}
+.ab{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 12px;border-radius:4px;white-space:nowrap}
+.ab-b{background:var(--blueA);border:1px solid rgba(59,130,246,.2);color:var(--blue)}
+.ab-g{background:var(--goldA);border:1px solid rgba(217,119,6,.2);color:var(--gold)}
+
+/* SKILLS */
+.sk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:14px}
+.sk-card{background:var(--card);border:1px solid var(--brd);border-radius:12px;padding:28px;transition:all .3s;cursor:default}
+.sk-card:hover{border-color:rgba(59,130,246,.26);transform:translateY(-3px)}
+.sk-ico{width:52px;height:52px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:18px}
+.si0{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.18);color:#3B82F6}
+.si1{background:rgba(217,119,6,.1);border:1px solid rgba(217,119,6,.18);color:#D97706}
+.si2{background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.18);color:#8B5CF6}
+.si3{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.18);color:#10B981}
+.si4{background:rgba(236,72,153,.1);border:1px solid rgba(236,72,153,.18);color:#EC4899}
+.si5{background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.18);color:#F97316}
+.si6{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.18);color:#EF4444}
+.sk-ttl{font-size:16px;font-weight:600;color:var(--text);margin-bottom:10px}
+.sk-desc{font-size:13px;color:var(--dim);line-height:1.8}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.ct-intro{font-size:15px;color:var(--mid);line-height:1.85;margin-bottom:36px}
+.ct-links{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+.ct-link{display:flex;align-items:center;gap:18px;padding:18px 22px;background:var(--card);border:1px solid var(--brd);border-radius:12px;text-decoration:none;color:var(--text);transition:all .25s}
+.ct-link:hover{border-color:rgba(59,130,246,.3);background:rgba(59,130,246,.04);transform:translateX(4px)}
+.ct-ico{width:40px;height:40px;border-radius:10px;background:var(--blueA);border:1px solid rgba(59,130,246,.2);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--blue);flex-shrink:0}
+.ct-ltype{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--dim);margin-bottom:3px}
+.ct-lval{font-size:14px;font-weight:500;color:var(--text)}
+.ct-arr{color:var(--dim);font-size:12px;margin-left:auto;transition:color .2s}
+.ct-link:hover .ct-arr{color:var(--blue)}
+.ct-tags{display:flex;flex-direction:column;gap:9px}
+.ct-tag{font-size:13px;font-weight:500;color:var(--mid);display:flex;align-items:center;gap:10px}
+.ct-tag i{color:var(--blue);font-size:12px}
+.ct-form{display:flex;flex-direction:column;gap:18px;background:var(--card);border:1px solid var(--brd);border-radius:16px;padding:36px}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cf-group{display:flex;flex-direction:column;gap:8px}
+.cf-lbl{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim)}
+.cf-inp{background:rgba(255,255,255,.03);border:1px solid var(--brd);border-radius:8px;padding:12px 16px;font-family:'Inter',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color .2s;resize:none;width:100%}
+.cf-inp::placeholder{color:var(--dim)}
+.cf-inp:focus{border-color:rgba(59,130,246,.42);background:rgba(59,130,246,.025)}
+.cf-ta{min-height:130px;line-height:1.6}
+.cf-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:14px 28px;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;cursor:pointer;transition:all .25s;margin-top:4px}
+.cf-btn:hover{background:#2563EB;transform:translateY(-2px);box-shadow:0 12px 30px rgba(59,130,246,.3)}
+.cf-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
+.cf-note{font-size:13px;text-align:center;min-height:18px;transition:opacity .3s}
+.cf-note.ok{color:#10B981}
+.cf-note.err{color:#EF4444}
+
+/* FOOTER */
+footer{padding:56px 0;border-top:1px solid var(--brd);position:relative;z-index:1}
+.ft-in{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
+.ft-lg{font-size:13px;font-weight:800;letter-spacing:5px;text-transform:uppercase;color:var(--blue)}
+.ft-links{display:flex;gap:32px}
+.ft-links a{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--dim);transition:color .2s}
+.ft-links a:hover{color:var(--text)}
+.ft-cp{font-size:12px;color:var(--dim)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav,.hero-in,.wrap{padding-left:24px;padding-right:24px}
+  section{padding:80px 0}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .about-grid,.vent-grid,.contact-grid{grid-template-columns:1fr;gap:40px}
+  .vc{padding:32px}
+  .ar{flex-wrap:wrap;gap:12px;padding:20px}
+  .ar-num{min-width:unset;font-size:28px}
+  footer{padding:40px 0}
+  .ft-in{flex-direction:column;align-items:flex-start}
+  .nav-ul{display:none}
+}
+@media(max-width:600px){
+  .stats-grid{grid-template-columns:1fr}
+  .hero-name{font-size:60px;letter-spacing:-3px}
+  .tab-bar{width:100%}
+  .tb{flex:1;justify-content:center;font-size:9px;padding:10px 12px}
+  .cf-row{grid-template-columns:1fr}
+  .ct-form{padding:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-lg">KS</div>
+  <ul class="nav-ul">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#ventures">Ventures</a></li>
+    <li><a href="#achievements">Impact</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-in">
+    <div class="hero-badge"><span class="bdot"></span>Tech Entrepreneur &nbsp;&middot;&nbsp; PR Strategist &nbsp;&middot;&nbsp; Brand Architect</div>
+    <h1 class="hero-name">KARTHIK<span>SUNIL</span></h1>
+    <p class="hero-sub">Building digital ecosystems. Engineering brand presence. Architecting the future through technology and community &mdash; one system at a time.</p>
+    <div class="hero-pills">
+      <span class="hpill">Brand Strategist @ Atria IT</span>
+      <span class="hpill">Founder @ RESQ &amp; ADRA</span>
+      <span class="hpill">PR Lead @ GDG on Campus</span>
+      <span class="hpill">Research Director @ Rotaract</span>
+    </div>
+    <div class="hero-ctas">
+      <a href="#ventures" class="btn-p">View My Work</a>
+      <a href="#contact" class="btn-s">Get In Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="alt" id="stats">
+  <div class="wrap">
+    <span class="eyebrow fu">In Numbers</span>
+    <h2 class="sec-h fu">Measurable Impact</h2>
+    <div class="stats-grid">
+      <div class="sc-cell fu"><div class="sc-num" style="color:#3B82F6" data-target="765600">0</div><div class="sc-lbl">Views in 30 Days</div><div class="sc-desc">Historic all-time record on Atria IT's Instagram &mdash; highest since the page was ever created</div></div>
+      <div class="sc-cell fu"><div class="sc-num" style="color:#D97706" data-target="17" data-sfx="%">0</div><div class="sc-lbl">Engagement Rate</div><div class="sc-desc">5.6&times; the industry benchmark &mdash; precision targeting, zero paid promotion</div></div>
+      <div class="sc-cell fu"><div class="sc-num" style="color:#EF4444">900K+</div><div class="sc-lbl">Collective Impressions</div><div class="sc-desc">Engineered across a unified institutional digital ecosystem from the ground up</div></div>
+      <div class="sc-cell fu"><div class="sc-num" style="color:#8B5CF6" data-target="357" data-sfx="%">0</div><div class="sc-lbl">Messaging Growth</div><div class="sc-desc">Transformed Instagram into a multi-stakeholder communication hub</div></div>
+      <div class="sc-cell fu"><div class="sc-num" style="color:#10B981" data-target="400" data-sfx="+">0</div><div class="sc-lbl">Participants Onboarded</div><div class="sc-desc">First-ever national overnight hackathon at Atria IT campus</div></div>
+      <div class="sc-cell fu"><div class="sc-num" style="color:#EC4899">5&times;</div><div class="sc-lbl">Organic Reach Growth</div><div class="sc-desc">Every post exceeds previous peak &mdash; pure strategy, no ad spend</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-body">
+        <span class="eyebrow fu">About</span>
+        <h2 class="sec-h fu">Building<br>Ecosystems</h2>
+        <p class="fu">I&rsquo;m Karthik Sunil &mdash; a tech enthusiast, PR professional, and entrepreneur. I began managing studio operations and CTO-level tech at JG Academy, a full-scale ed-tech company, long before entering college.</p>
+        <p class="fu">Today, I lead brand strategy, community building, and enterprise ventures at Atria Institute of Technology &mdash; engineering historic social media records, founding startups that save lives, and building AI systems that move business forward.</p>
+        <p class="fu">My work lives at the intersection of technology, storytelling, and systems thinking &mdash; always anchored to one goal: measurable, outsized impact.</p>
+        <div class="stags fu">
+          <span class="stag">PR &amp; Media</span><span class="stag">Brand Strategy</span><span class="stag">AI / Tech</span><span class="stag">Community Building</span><span class="stag">Entrepreneurship</span><span class="stag">Event Management</span><span class="stag">Research</span><span class="stag">Studio Production</span>
+        </div>
+      </div>
+      <div class="info-stack fu">
+        <div class="icard"><div class="ic-lbl">Current Role</div><div class="ic-val">Brand Strategist</div><div class="ic-sub">Atria Institute of Technology &middot; Social Media &amp; Digital Outreach Cell</div></div>
+        <div class="icard"><div class="ic-lbl">Ventures</div><div class="ic-val">ADRA + RESQ</div><div class="ic-sub">Enterprise AI/Robotics &middot; Student Innovation Community</div></div>
+        <div class="icard"><div class="ic-lbl">Atria IT Instagram &middot; May 2026</div><div class="ic-val">765,600</div><div class="ic-sub">Views in 30 days &mdash; the page&rsquo;s highest recorded reach, ever</div></div>
+        <div class="icard"><div class="ic-lbl">Based In</div><div class="ic-val">Bengaluru</div><div class="ic-sub">Atria Institute of Technology, Karnataka, India</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="alt" id="experience">
+  <div class="wrap">
+    <span class="eyebrow fu">Career Journey</span>
+    <h2 class="sec-h fu">Experience &amp; Leadership</h2>
+    <!-- ATRIA IT GROUP -->
+    <div class="exp-group fu">
+      <div class="exp-group-hd">
+        <div class="egh-ico egh-blue"><i class="fa-solid fa-building-columns"></i></div>
+        <span class="egh-lbl">Atria Institute of Technology</span>
+        <span class="egh-count">7 Roles</span>
+      </div>
+      <div class="exp-cards">
+        <div class="ec fu"><div class="logo-b l-ait">AIT</div><div class="ec-org">Atria Institute of Technology</div><div class="ec-role">Brand Strategist</div><div class="ec-desc">Engineered 765,600 views in 30 days &mdash; the page&rsquo;s all-time historic record. Built brand governance across 10&ndash;15 club accounts. Achieved 17% engagement rate (5.6&times; benchmark) through pure organic strategy. Real-time crisis management preserved brand reputation.</div><div class="chips"><span class="chip">765K Views &middot; 30 Days</span><span class="chip">17% Engagement</span><span class="chip">0 Paid Promotions</span><span class="chip">Brand Governance</span></div></div>
+        <div class="ec fu"><div class="logo-b l-goo"><i class="fa-brands fa-google"></i></div><div class="ec-org">GDG on Campus &middot; Atria IT</div><div class="ec-role">PR Lead</div><div class="ec-desc">Grew Instagram from under 100 to 450+ followers and chapter members to 1,200+. Onboarded 400+ hackathon participants in 5 days. Led the team to Tier 1 recognition in Google Cloud Study Jam. Organised Atria&rsquo;s first-ever national overnight hackathon (400+ participants, 24 hours).</div><div class="chips"><span class="chip">1,200+ Members</span><span class="chip">400+ / 5 Days</span><span class="chip">Tier 1 Google Cloud</span><span class="chip">Mega Hackathon</span></div></div>
+        <div class="ec fu"><div class="logo-b l-rot"><i class="fa-solid fa-gear"></i></div><div class="ec-org">Rotaract Club &middot; Atria IT</div><div class="ec-role">Research Initiative Director</div><div class="ec-desc">Launched &lsquo;Namma Oota Namma Arogya&rsquo; with APS PU College. Chaired &lsquo;Mahadaan&rsquo; blood donation drive going class-to-class. Secured Isha Foundation collaboration for the Save Soil movement &mdash; committed to broadcasting Rotaract Atria IT across all their channels.</div><div class="chips"><span class="chip">Isha Foundation</span><span class="chip">Health Initiatives</span><span class="chip">Institutional Partnerships</span></div></div>
+        <div class="ec fu"><div class="logo-b l-ieee">IEEE</div><div class="ec-org">IEEE Student Branch &middot; Atria IT</div><div class="ec-role">PR Lead &middot; Hackathon</div><div class="ec-desc">Rebuilt IEEE&rsquo;s social and PR presence from 200 to 500+ followers within a single month during hackathon operations. Re-established credible digital presence from near zero.</div><div class="chips"><span class="chip">200 &rarr; 500 Followers</span><span class="chip">PR Architecture</span></div></div>
+        <div class="ec fu"><div class="logo-b l-vig"><i class="fa-solid fa-bolt"></i></div><div class="ec-org">Cepheus Hackathon &middot; Vigyanraang 2026</div><div class="ec-role">Core Tech Organiser</div><div class="ec-desc">Secured the highest sponsorship for the hackathon &mdash; &#8377;60K monetary + &#8377;38K in-kind, totalling &#8377;98K. Spearheaded technical operations for the flagship event of Vigyanraang 2026, Atria IT&rsquo;s biggest annual fest.</div><div class="chips"><span class="chip">&#8377;98K Total Sponsorship</span><span class="chip">&#8377;60K Monetary</span><span class="chip">Flagship Event</span></div></div>
+        <div class="ec fu"><div class="logo-b l-swc"><i class="fa-solid fa-people-group"></i></div><div class="ec-org">Student Welfare Council &middot; Atria IT</div><div class="ec-role">Active Coordinator</div><div class="ec-desc">Head student coordinator for Community Day &mdash; Atria IT&rsquo;s annual all-clubs showcase. Managed inter-club coordination, guided booth presentations, and drove campus-wide engagement across every active club.</div><div class="chips"><span class="chip">Community Day Lead</span><span class="chip">All-Club Coordinator</span><span class="chip">Campus Engagement</span></div></div>
+        <div class="ec fu"><div class="logo-b l-tedx">TEDx</div><div class="ec-org">TEDx &middot; Atria IT</div><div class="ec-role">Organising Team</div><div class="ec-desc">Core organising team member contributing critical logistics problem-solving at end moments for the venue. Ensured seamless execution under pressure during the final hours of the TEDx event.</div><div class="chips"><span class="chip">Logistics</span><span class="chip">Crisis Management</span><span class="chip">TEDx Standard</span></div></div>
+      </div>
+    </div>
+
+    <!-- CORPORATE & EXTERNAL GROUP -->
+    <div class="exp-group fu">
+      <div class="exp-group-hd">
+        <div class="egh-ico egh-gold"><i class="fa-solid fa-briefcase"></i></div>
+        <span class="egh-lbl egh-lbl-gold">Corporate &amp; External</span>
+        <span class="egh-count">4 Roles</span>
+      </div>
+      <div class="exp-cards">
+        <div class="ec gd fu"><div class="logo-b l-jg"><i class="fa-solid fa-graduation-cap"></i></div><div class="ec-org">JG Academy &middot; Ed-Tech Company</div><div class="ec-role">CTO-Level Operations</div><div class="ec-desc">Professionally managing studio operations and technology infrastructure at JG Academy &mdash; a full-scale ed-tech company. Handled operations at a CTO level covering studio management, tech infrastructure, and business continuity.</div><div class="chips"><span class="chip">Ed-Tech</span><span class="chip">Studio Operations</span><span class="chip">CTO Level</span></div></div>
+        <div class="ec gd fu"><div class="logo-b l-vips"><i class="fa-solid fa-tower-broadcast"></i></div><div class="ec-org">VIPS &middot; Pre-University</div><div class="ec-role">Press &amp; Media Lead</div><div class="ec-desc">Served as Press and Media Lead from 11th standard &mdash; organised major press talks, improved institutional media essence, and built the school&rsquo;s media presence. Laid the professional foundation for all future PR and brand strategy work.</div><div class="chips"><span class="chip">Press Talks</span><span class="chip">Media Strategy</span><span class="chip">From 11th Std</span></div></div>
+        <div class="ec gd fu"><div class="logo-b l-slf"><i class="fa-solid fa-book-open"></i></div><div class="ec-org">Student Lit Fest 2026 &middot; Yuvakasangha</div><div class="ec-role">Ambassador</div><div class="ec-desc">Handled celebrity interviews and end-to-end PR operations for Bengaluru&rsquo;s Student Lit Fest &mdash; a city-wide literary and cultural festival. Represented the event as an official ambassador to media and the public.</div><div class="chips"><span class="chip">Celebrity Interviews</span><span class="chip">PR Operations</span><span class="chip">City-Wide Festival</span></div></div>
+        <div class="ec gd fu"><div class="logo-b l-cnt"><i class="fa-solid fa-camera"></i></div><div class="ec-org">Brand Events &amp; Content Collaborations</div><div class="ec-role">Content Creator &amp; Collaborator</div><div class="ec-desc">Invited as a special guest to meet Alan Walker at the ASUS 300 Store launch &mdash; Bengaluru&rsquo;s flagship tech retail opening. Subsequently invited as a professional content creator for the Wobble Store launch at LuLu Mall, Bengaluru.</div><div class="chips"><span class="chip">Alan Walker</span><span class="chip">Content Creator</span><span class="chip">LuLu Mall</span><span class="chip">Brand Events</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VENTURES -->
+<section id="ventures">
+  <div class="wrap">
+    <span class="eyebrow fu">Entrepreneurship</span>
+    <h2 class="sec-h fu">Ventures I&rsquo;m Building</h2>
+    <div class="vent-grid">
+      <div class="vc adra fu">
+        <div class="vc-ico">A</div>
+        <div class="vc-nm">ADRA</div>
+        <div class="vc-tag">Agile Development of Robotics &amp; Automations</div>
+        <div class="vc-desc">An enterprise-level startup building AI and robotics solutions for businesses. Positioned to become next-generation intelligent asset management infrastructure &mdash; combining agentic AI with enterprise automation at scale, aiming to be the BlackRock of intelligent systems.</div>
+        <div class="vc-items">
+          <div class="vc-item"><div class="vdot"></div><div><span class="vit">Agentic AI Development</span><span class="vsub">Building proprietary agentic AI models for business automation</span></div></div>
+          <div class="vc-item"><div class="vdot"></div><div><span class="vit">Robotics &amp; Automation</span><span class="vsub">Industrial and enterprise-grade solutions for operational efficiency</span></div></div>
+          <div class="vc-item"><div class="vdot"></div><div><span class="vit">Enterprise Asset Intelligence</span><span class="vsub">Next-gen intelligent asset management infrastructure</span></div></div>
+        </div>
+      </div>
+      <div class="vc resq fu">
+        <div class="vc-ico">R</div>
+        <div class="vc-nm">RESQ</div>
+        <div class="vc-tag">Rescue Every Soul Quickly</div>
+        <div class="vc-desc">A non-commercial, student-founded startup community rooted in purpose-driven innovation. Open to students, professionals, and changemakers united by one belief: technology must serve life &mdash; every product must be testable, deployable, and impactful.</div>
+        <div class="vc-items">
+          <div class="vc-item"><div class="vdot"></div><div><span class="vit">Vision X</span><span class="vsub">Blind assistant technology</span></div></div>
+          <div class="vc-item"><div class="vdot"></div><div><span class="vit">RESQ SOS</span><span class="vsub">Distress signals without mobile network or internet</span></div></div>
+          <div class="vc-item"><div class="vdot"></div><div><span class="vit">RESQ Paws Veterinary</span><span class="vsub">MedTech solutions for the veterinary industry</span></div></div>
+          <div class="vc-item"><div class="vdot"></div><div><span class="vit">Spark Tank</span><span class="vsub">8 teams qualified to be part of RESQ startup community &mdash; chief guests from Aakash Electronics, Chota Kisaan Robotics &amp; top business analysts</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section class="alt" id="achievements">
+  <div class="wrap">
+    <span class="eyebrow fu">Milestones</span>
+    <h2 class="sec-h fu">Key Achievements</h2>
+    <div class="ach-groups">
+      <div class="fu">
+        <div class="ach-hd"><div class="ach-ico ai-b"><i class="fa-solid fa-building-columns"></i></div><span class="ach-lbl bl">Atria IT Milestones</span><span class="ach-cnt">6 Achievements</span></div>
+        <div class="arows">
+          <div class="ar"><div class="ar-num">765K</div><div class="ar-body"><div class="ar-title">Historic Instagram Record &mdash; Atria IT</div><div class="ar-desc">765,600 views in 30 days &mdash; highest recorded reach since the Atria IT Instagram page was ever created. 5&times; organic baseline growth, zero paid promotion.</div></div><span class="ab ab-b">Brand Strategy</span></div>
+          <div class="ar"><div class="ar-num">Tier 1</div><div class="ar-body"><div class="ar-title">Google Cloud Study Jam &mdash; Tier 1 Accomplisher</div><div class="ar-desc">GDG on Campus Atria IT recognised as Tier 1 by Google. Led team division and guided 400+ participants through structured completion within the stipulated timeline.</div></div><span class="ab ab-b">GDG &middot; Google</span></div>
+          <div class="ar"><div class="ar-num">200+</div><div class="ar-body"><div class="ar-title">2&times; Capacity Overnight &mdash; GDG Event (Venue: 100)</div><div class="ar-desc">PR ops started just 1 night before the event. Delivered 200+ registrations for a 100-seat venue. Google&rsquo;s CrowdSource resource person stated they had never seen this large a turnout.</div></div><span class="ab ab-b">PR &middot; Record</span></div>
+          <div class="ar"><div class="ar-num">&#8377;98K</div><div class="ar-body"><div class="ar-title">Cepheus Hackathon &mdash; Highest Sponsorship Secured</div><div class="ar-desc">&#8377;60K monetary + &#8377;38K in-kind for Cepheus Hackathon at Vigyanraang 2026 &mdash; the highest sponsorship amount recorded for the event.</div></div><span class="ab ab-b">Sponsorship &middot; Record</span></div>
+          <div class="ar"><div class="ar-num">Isha</div><div class="ar-body"><div class="ar-title">Isha Foundation Partnership &mdash; Save Soil Movement</div><div class="ar-desc">Positioned Rotaract Atria IT as a collaboration partner for Isha Foundation&rsquo;s global Save Soil movement. They committed to broadcasting the initiative across all their channels.</div></div><span class="ab ab-b">Rotaract &middot; Partnership</span></div>
+          <div class="ar"><div class="ar-num">400+</div><div class="ar-body"><div class="ar-title">Atria IT&rsquo;s First-Ever National Overnight Hackathon</div><div class="ar-desc">Onboarded 400+ participants from 35+ colleges for a 24-hour overnight hackathon &mdash; coordinating all PR, outreach, and registration operations as GDG PR Lead.</div></div><span class="ab ab-b">GDG &middot; Scale</span></div>
+        </div>
+      </div>
+      <div class="fu">
+        <div class="ach-hd"><div class="ach-ico ai-g"><i class="fa-solid fa-briefcase"></i></div><span class="ach-lbl gd">Industry &amp; External Wins</span><span class="ach-cnt">5 Achievements</span></div>
+        <div class="arows">
+          <div class="ar gd"><div class="ar-num">JG</div><div class="ar-body"><div class="ar-title">CTO-Level Operations &mdash; JG Academy</div><div class="ar-desc">Professionally managing studio operations and technology infrastructure at a full-scale ed-tech company. Built real-world expertise in tech ops, business continuity, and production systems years ahead of peers.</div></div><span class="ab ab-g">JG Academy</span></div>
+          <div class="ar gd"><div class="ar-num">11th</div><div class="ar-body"><div class="ar-title">Press &amp; Media Lead &mdash; VIPS (Pre-University)</div><div class="ar-desc">Established and led a professional press and media function at VIPS from 11th standard. Organised major press talks, built institutional media presence, and laid the strategic PR foundation.</div></div><span class="ab ab-g">VIPS &middot; Media</span></div>
+          <div class="ar gd"><div class="ar-num">8</div><div class="ar-body"><div class="ar-title">Spark Tank &mdash; 8 Teams Joining RESQ Startup Community</div><div class="ar-desc">Organised a mega business competition with chief guests from Aakash Electronics, Chota Kisaan Robotics, and leading business analysts. 8 teams qualified to be a part of the RESQ startup community.</div></div><span class="ab ab-g">RESQ &middot; Entrepreneurship</span></div>
+          <div class="ar gd"><div class="ar-num">500+</div><div class="ar-body"><div class="ar-title">RESQ at Rotary Pet-a-Thon &mdash; Bengaluru</div><div class="ar-desc">RESQ recognised at the Rotary Pet-a-Thon, sponsored by PhonePe and Dozee Health AI. Connected with 500+ pet owners, veterinary professionals, and animal welfare advocates.</div></div><span class="ab ab-g">RESQ &middot; Community</span></div>
+          <div class="ar gd"><div class="ar-num">Live</div><div class="ar-body"><div class="ar-title">Content Creator &amp; Brand Collaborations</div><div class="ar-desc">Invited as a special guest to meet Alan Walker at the ASUS 300 Store launch. Subsequently invited as a professional content creator for the Wobble Store grand opening at LuLu Mall, Bengaluru.</div></div><span class="ab ab-g">Content Creator</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <span class="eyebrow fu">Competencies</span>
+    <h2 class="sec-h fu">Skills &amp; Expertise</h2>
+    <div class="sk-grid">
+      <div class="sk-card fu"><div class="sk-ico si0"><i class="fa-solid fa-tower-broadcast"></i></div><div class="sk-ttl">PR &amp; Media Strategy</div><div class="sk-desc">Press operations &middot; Media relations &middot; Community outreach &middot; Crisis management &middot; Celebrity interview handling &middot; Event PR</div></div>
+      <div class="sk-card fu"><div class="sk-ico si1"><i class="fa-solid fa-chart-line"></i></div><div class="sk-ttl">Brand Strategy</div><div class="sk-desc">Organic growth engineering &middot; Content governance &middot; Engagement architecture &middot; Audience precision targeting &middot; Real-time brand protection</div></div>
+      <div class="sk-card fu"><div class="sk-ico si2"><i class="fa-solid fa-microchip"></i></div><div class="sk-ttl">AI &amp; Technology</div><div class="sk-desc">Agentic AI development &middot; Enterprise automation &middot; Robotics systems &middot; Technical architecture &middot; CTO-level operations</div></div>
+      <div class="sk-card fu"><div class="sk-ico si3"><i class="fa-solid fa-people-group"></i></div><div class="sk-ttl">Community Building</div><div class="sk-desc">Ecosystem engineering &middot; Multi-club management &middot; Student welfare &middot; Cross-institutional partnerships &middot; Startup incubation</div></div>
+      <div class="sk-card fu"><div class="sk-ico si4"><i class="fa-solid fa-calendar-check"></i></div><div class="sk-ttl">Event Management</div><div class="sk-desc">National hackathons &middot; TEDx &middot; Mega business competitions &middot; Logistics under pressure &middot; Sponsorship acquisition</div></div>
+      <div class="sk-card fu"><div class="sk-ico si5"><i class="fa-solid fa-rocket"></i></div><div class="sk-ttl">Entrepreneurship</div><div class="sk-desc">Startup founding &amp; building &middot; Research initiatives &middot; Investor-ready pitch management &middot; Funding &amp; incubation orchestration</div></div>
+      <div class="sk-card fu"><div class="sk-ico si6"><i class="fa-solid fa-clapperboard"></i></div><div class="sk-ttl">Studio &amp; Production</div><div class="sk-desc">Camera operation &middot; Studio setup &amp; management &middot; Sound engineering &middot; Basic VFX &middot; Content production &middot; Professional media handling</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="alt" id="contact">
+  <div class="wrap">
+    <span class="eyebrow fu">Get In Touch</span>
+    <h2 class="sec-h fu">Let&rsquo;s Connect</h2>
+    <div class="contact-grid fu">
+      <div>
+        <p class="ct-intro">Whether it&rsquo;s a collaboration, a brand project, a tech venture, or just a conversation &mdash; I&rsquo;m always open. Reach out and let&rsquo;s build something meaningful.</p>
+        <div class="ct-links">
+          <a href="mailto:karthiksg.06@gmail.com" class="ct-link" target="_blank" rel="noopener">
+            <div class="ct-ico"><i class="fa-solid fa-envelope"></i></div>
+            <div><div class="ct-ltype">Email</div><div class="ct-lval">karthiksg.06@gmail.com</div></div>
+            <i class="fa-solid fa-arrow-up-right-from-square ct-arr"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/karthik-sunil-251aa4256/" class="ct-link" target="_blank" rel="noopener">
+            <div class="ct-ico"><i class="fa-brands fa-linkedin-in"></i></div>
+            <div><div class="ct-ltype">LinkedIn</div><div class="ct-lval">Karthik Sunil</div></div>
+            <i class="fa-solid fa-arrow-up-right-from-square ct-arr"></i>
+          </a>
+          <a href="https://www.instagram.com/karthik13._/" class="ct-link" target="_blank" rel="noopener">
+            <div class="ct-ico"><i class="fa-brands fa-instagram"></i></div>
+            <div><div class="ct-ltype">Instagram</div><div class="ct-lval">@karthik13._</div></div>
+            <i class="fa-solid fa-arrow-up-right-from-square ct-arr"></i>
+          </a>
+        </div>
+        <div class="ct-tags">
+          <span class="ct-tag"><i class="fa-solid fa-circle-check"></i>Open to Collaborations</span>
+          <span class="ct-tag"><i class="fa-solid fa-circle-check"></i>Brand &amp; PR Projects</span>
+          <span class="ct-tag"><i class="fa-solid fa-circle-check"></i>Tech Ventures</span>
+          <span class="ct-tag"><i class="fa-solid fa-circle-check"></i>Speaking &amp; Events</span>
+        </div>
+      </div>
+      <div>
+        <form class="ct-form" id="ct-form">
+          <div class="cf-row">
+            <div class="cf-group"><label class="cf-lbl">Name</label><input class="cf-inp" type="text" id="cf-name" placeholder="Your name" required></div>
+            <div class="cf-group"><label class="cf-lbl">Email</label><input class="cf-inp" type="email" id="cf-email" placeholder="your@email.com" required></div>
+          </div>
+          <div class="cf-group"><label class="cf-lbl">Subject</label><input class="cf-inp" type="text" id="cf-subject" placeholder="What's this about?" required></div>
+          <div class="cf-group"><label class="cf-lbl">Message</label><textarea class="cf-inp cf-ta" id="cf-msg" placeholder="Tell me more..." rows="5" required></textarea></div>
+          <button type="submit" class="cf-btn" id="cf-btn">
+            <span id="cf-btn-txt">Send Message</span>
+            <i class="fa-solid fa-paper-plane" id="cf-btn-ico"></i>
+          </button>
+          <div class="cf-note" id="cf-note"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="ft-in">
+      <div class="ft-lg">Karthik Sunil</div>
+      <div class="ft-links">
+        <a href="https://www.linkedin.com/in/karthik-sunil-251aa4256/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.instagram.com/karthik13._/" target="_blank" rel="noopener">Instagram</a>
+        <a href="mailto:karthiksg.06@gmail.com">Email</a>
+      </div>
+      <div class="ft-cp">Bengaluru &nbsp;&middot;&nbsp; 2026</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* THREE.JS PARTICLE NETWORK */
+(function(){
+  var c=new THREE.WebGLRenderer({alpha:true,antialias:false});
+  c.setPixelRatio(Math.min(window.devicePixelRatio,1.5));
+  c.setSize(innerWidth,innerHeight);
+  c.setClearColor(0,0);
+  c.domElement.style.cssText='position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.35;';
+  document.body.prepend(c.domElement);
+  var sc=new THREE.Scene();
+  var cam=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,.1,1000);
+  cam.position.z=32;
+  var N=90,pos=new Float32Array(N*3),vel=[];
+  for(var i=0;i<N;i++){
+    pos[i*3]=(Math.random()-.5)*72;
+    pos[i*3+1]=(Math.random()-.5)*52;
+    pos[i*3+2]=(Math.random()-.5)*6;
+    vel.push({x:(Math.random()-.5)*.016,y:(Math.random()-.5)*.016});
+  }
+  var pg=new THREE.BufferGeometry();
+  pg.setAttribute('position',new THREE.BufferAttribute(pos,3));
+  sc.add(new THREE.Points(pg,new THREE.PointsMaterial({size:.22,color:0x3B82F6,transparent:true,opacity:.7})));
+  var ML=N*8,lp=new Float32Array(ML*6),lg=new THREE.BufferGeometry();
+  lg.setAttribute('position',new THREE.BufferAttribute(lp,3));
+  lg.setDrawRange(0,0);
+  sc.add(new THREE.LineSegments(lg,new THREE.LineBasicMaterial({color:0x3B82F6,transparent:true,opacity:.09})));
+  var mx=0,my=0;
+  window.addEventListener('mousemove',function(e){mx=(e.clientX/innerWidth-.5)*.22;my=(e.clientY/innerHeight-.5)*.22;});
+  var D2=13*13;
+  (function tick(){
+    requestAnimationFrame(tick);
+    for(var i=0;i<N;i++){pos[i*3]+=vel[i].x;pos[i*3+1]+=vel[i].y;if(Math.abs(pos[i*3])>36)vel[i].x*=-1;if(Math.abs(pos[i*3+1])>26)vel[i].y*=-1;}
+    pg.attributes.position.needsUpdate=true;
+    var li=0;
+    for(var i=0;i<N&&li<ML;i++)for(var j=i+1;j<N&&li<ML;j++){var dx=pos[i*3]-pos[j*3],dy=pos[i*3+1]-pos[j*3+1];if(dx*dx+dy*dy<D2){var b=li*6;lp[b]=pos[i*3];lp[b+1]=pos[i*3+1];lp[b+2]=pos[i*3+2];lp[b+3]=pos[j*3];lp[b+4]=pos[j*3+1];lp[b+5]=pos[j*3+2];li++;}}
+    lg.attributes.position.needsUpdate=true;lg.setDrawRange(0,li*2);
+    cam.position.x+=(mx-cam.position.x)*.018;cam.position.y+=(-my-cam.position.y)*.018;cam.lookAt(sc.position);
+    c.render(sc,cam);
+  })();
+  window.addEventListener('resize',function(){cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();c.setSize(innerWidth,innerHeight);});
+})();
+
+/* NAV */
+window.addEventListener('scroll',function(){document.getElementById('nav').classList.toggle('sc',window.scrollY>20);});
+
+
+/* SCROLL REVEAL */
+(function(){
+  var o=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var siblings=[].slice.call(e.target.parentElement.querySelectorAll('.fu:not(.v)'));
+        if(siblings.length>1){siblings.forEach(function(el,i){setTimeout(function(){el.classList.add('v');},i*75);});}else{e.target.classList.add('v');}
+        o.unobserve(e.target);
+      }
+    });
+  },{threshold:.09,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.fu').forEach(function(el){o.observe(el);});
+})();
+
+/* COUNTERS */
+(function(){
+  var o=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting&&e.target.dataset.target){
+        var el=e.target,target=parseInt(el.dataset.target),sfx=el.dataset.sfx||'+',isLg=target>=10000,start=performance.now(),dur=1800;
+        (function frame(now){var p=Math.min((now-start)/dur,1),v=Math.floor((1-Math.pow(1-p,3))*target);el.textContent=(isLg?Math.floor(v/1000)+'K':v)+sfx;if(p<1)requestAnimationFrame(frame);})(performance.now());
+        o.unobserve(el);
+      }
+    });
+  },{threshold:.5});
+  document.querySelectorAll('[data-target]').forEach(function(el){o.observe(el);});
+})();
+
+/* CONTACT FORM */
+document.getElementById('ct-form').addEventListener('submit',function(e){
+  e.preventDefault();
+  var btn=document.getElementById('cf-btn'),txt=document.getElementById('cf-btn-txt'),ico=document.getElementById('cf-btn-ico'),note=document.getElementById('cf-note');
+  var name=document.getElementById('cf-name').value,email=document.getElementById('cf-email').value,subject=document.getElementById('cf-subject').value,msg=document.getElementById('cf-msg').value;
+  btn.disabled=true;txt.textContent='Sending...';ico.className='fa-solid fa-spinner fa-spin';
+  setTimeout(function(){
+    window.location.href='mailto:karthiksg.06@gmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent('Hi Karthik,\n\nName: '+name+'\nEmail: '+email+'\n\nMessage:\n'+msg);
+    txt.textContent='Message Sent!';ico.className='fa-solid fa-check';
+    note.textContent='Your mail client should have opened. Looking forward to connecting!';note.className='cf-note ok';
+    setTimeout(function(){btn.disabled=false;txt.textContent='Send Message';ico.className='fa-solid fa-paper-plane';note.textContent='';note.className='cf-note';document.getElementById('ct-form').reset();},4000);
+  },800);
+});
+</script>
+</body>
+</html>
